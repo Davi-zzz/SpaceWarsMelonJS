@@ -1,4 +1,4 @@
-import { Body, Rect, Sprite, Math } from "melonjs";
+import { Body, Rect, Sprite, Math, collision} from "melonjs";
 
 class EnemyEntity extends Sprite {
   constructor(x, y) {
@@ -7,11 +7,13 @@ class EnemyEntity extends Sprite {
       frameheight: 32,
       framewidth: 32,
     });
-    this.body = new Body(this);
-    this.body.addShape(new Rect(10, 10, this.width, this.height));
-    this.body.ignoreGravity = true;
     this.chooseShipImage();
+    this.body = new Body(this);
+    this.body.collisionType = collision.types.ENEMY_OBJECT;
+    this.body.addShape(new Rect(0, 0, this.width, this.height));
+    this.body.ignoreGravity = true;
   }
+  //function to define the frame used for each space ship
   chooseShipImage() {
     let frame = Math.random(0, 3);
     super.addAnimation("idle", [frame], 1);
