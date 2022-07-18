@@ -4,8 +4,9 @@ import {
   game,
   Math,
   input,
+  pool,
 } from "melonjs/dist/melonjs.module.js";
-
+import CONSTANTS from "../../shared/constants.js";
 class PlayerEntity extends Sprite {
   /**
    * constructor
@@ -36,6 +37,15 @@ class PlayerEntity extends Sprite {
     }
     if (input.isKeyPressed("right")) {
       this.pos.x += (this.velx * dt) / 1000;
+    }
+    if (input.isKeyPressed("shoot")) {
+      game.world.addChild(
+        pool.pull(
+          "laser",
+          this.getBounds().centerX - CONSTANTS.LASER.WIDTH / 2,
+          this.getBounds().top
+        )
+      );
     }
     this.pos.x = Math.clamp(this.pos.x, 32, this.maxX);
 
