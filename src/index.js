@@ -13,6 +13,8 @@ import "index.css";
 
 import PlayScreen from "js/stage/play.js";
 import PlayerEntity from "js/renderables/player.js";
+import EnemyEntity from "./js/renderables/enemy";
+import Laser from "./js/renderables/laser";
 
 device.onReady(() => {
   // initialize the display canvas once the device/browser is ready
@@ -52,6 +54,12 @@ device.onReady(() => {
 
       // add our player entity in the entity pool
       pool.register("mainPlayer", PlayerEntity);
+
+      // add our player entity in the entity pool
+      pool.register("enemyEntity", EnemyEntity);
+
+      // add our laser in the entity pool
+      pool.register("laser", Laser);
 
       // Start the game.
       state.change(state.PLAY);
