@@ -1,4 +1,4 @@
-import { Container, game } from "melonjs";
+import { Container, game, state } from "melonjs";
 import EnemyEntity from "../renderables/enemy";
 import { timer } from "melonjs";
 class EnemyManager extends Container {
@@ -23,6 +23,7 @@ class EnemyManager extends Container {
         this.addChild(enemy);
       }
     }
+    this.createEnemies = true;
   }
 
   onActivateEvent() {
@@ -50,6 +51,13 @@ class EnemyManager extends Container {
         //here we increment the speed of container if he has no moved yet
         this.pos.x += this.vel;
       }
+
+      state.current().checkIfLoss(bounds.bottom);
+      this.onChildChange = () => {
+        if (this.children.length === 0) {
+          state.current().reset();
+        }
+      };
     }, 10);
   }
 
