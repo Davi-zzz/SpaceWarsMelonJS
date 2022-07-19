@@ -4,6 +4,7 @@ import {
   state,
   ColorLayer,
   input,
+  pool,
 } from "melonjs/dist/melonjs.module.js";
 import EnemyManager from "../managers/enemy-manager";
 
@@ -16,16 +17,13 @@ class PlayScreen extends Stage {
     // add a gray background to the default Stage
     game.world.addChild(new ColorLayer("background", "#202020"));
     this.player = new PlayerEntity();
-    // this.enemy = new EnemyEntity(140, 140);
     this.EnemyManager = new EnemyManager();
     this.EnemyManager.createEnemies();
 
     game.world.addChild(this.player, 1);
     game.world.addChild(this.EnemyManager, 2);
-    // game.world.addChild(this.enemy, 2);
 
-
-
+    //bind keys section
     input.bindKey(input.KEY.LEFT, "left");
     input.bindKey(input.KEY.RIGHT, "right");
     input.bindKey(input.KEY.A, "left");
@@ -34,6 +32,14 @@ class PlayScreen extends Stage {
 
     state.change(state.PLAY);
   }
+
+  checkIfLoss = (y) => {
+    if (y >= this.player.pos.y) {
+      console.log("end game");
+      state.stop();
+      // this.reset(this);
+    }
+  };
 
   onDestroyEvent() {
     input.unbindKey(input.KEY.LEFT);
